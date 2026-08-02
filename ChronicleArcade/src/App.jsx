@@ -19,13 +19,11 @@ import { AddGame } from './screen/admin/AddGame';
 import { GamesList } from './screen/admin/GamesList';
 import { GameTweets } from './components/GameTweets';
 import { SeeTweets } from './screen/admin/SeeTweets';
-import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { sendHeartbeat } from './services/authService';
 
-function AppContent() {
+function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
-  const { isDark } = useTheme();
 
   useEffect(() => {
     const isLoggedIn = Boolean(localStorage.getItem('token'));
@@ -42,7 +40,7 @@ function AppContent() {
   }, []);
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${isDark ? 'bg-[#060814] text-white' : 'bg-slate-100 text-slate-900'}`}>
+    <div className="min-h-screen flex flex-col bg-[#060814] text-white">
       {isAdminRoute ? <AdminNavbar /> : <MainNavbar />}
       <main className="flex-1">
         <Routes>
@@ -66,14 +64,6 @@ function AppContent() {
       </main>
       <Footer />
     </div>
-  );
-}
-
-function App() {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
   );
 }
 
