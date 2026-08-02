@@ -48,7 +48,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30s' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30m' });
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -69,24 +69,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
-  try {
-    const secondsToAdd = Number(req.body?.seconds) || 0;
-    const token = req.cookies?.token || (req.headers.authorization?.startsWith('Bearer ') ? req.headers.authorization.split(' ')[1] : null);
-
-    if (token && secondsToAdd > 0) {
-      try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        if (decoded?.id) {
-          await User.findByIdAndUpdate(decoded.id, { $inc: { loggedInTime: secondsToAdd } });
-        }
-      } catch (jwtErr) {
-      }
-    }
-  } catch (error) {
-    console.error('Logout error:', error);
-  }
-
+export const logout = (req, res) => {
   res.clearCookie('token');
   return res.status(200).json({ message: 'Logged out successfully' });
 };
