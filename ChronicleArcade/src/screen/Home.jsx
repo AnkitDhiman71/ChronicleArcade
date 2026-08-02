@@ -6,6 +6,7 @@ import { Slider } from '../components/Slider1';
 import { Slider2 } from "../components/Slider2";
 import { GameRoulette } from '../components/GameRoulette';
 import { toggleFavorite, isFavorite, getFavorites } from '../utils/favorites';
+import Tilt from 'react-parallax-tilt';
 
 export function Home() {
   const [gameData, setGameData] = useState([]);
@@ -144,38 +145,53 @@ export function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: i * 0.05 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => sendData(game.id || game._id)}
-                  className="group glass-card flex flex-col h-full cursor-pointer rounded-2xl overflow-hidden shadow-xl transition-all duration-300"
+                  className="h-full"
                 >
-                  <div className="relative h-44 w-full overflow-hidden">
-                    <img
-                      src={game.thumbnail}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      alt={game.title}
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#060814] via-transparent to-transparent opacity-80" />
-                    <button
-                      onClick={(e) => handleFavClick(e, game.id || game._id)}
-                      className="absolute top-2.5 right-2.5 z-20 rounded-full bg-black/60 p-2 text-xs backdrop-blur-md transition-transform hover:scale-125 border border-white/10 cursor-pointer"
-                      title={isFavorite(game.id || game._id) ? "Remove from Favorites" : "Add to Favorites"}
+                  <Tilt
+                    tiltMaxAngleX={25}
+                    tiltMaxAngleY={25}
+                    perspective={600}
+                    scale={1.06}
+                    glareEnable={true}
+                    glareMaxOpacity={0.4}
+                    glareColor="#00f0ff"
+                    glarePosition="all"
+                    glareBorderRadius="1rem"
+                    className="h-full rounded-2xl overflow-hidden"
+                  >
+                    <div
+                      onClick={() => sendData(game.id || game._id)}
+                      className="group glass-card flex flex-col h-full cursor-pointer rounded-2xl overflow-hidden shadow-xl transition-all duration-300"
                     >
-                      {isFavorite(game.id || game._id) ? '❤️' : '🤍'}
-                    </button>
-                  </div>
+                      <div className="relative h-44 w-full overflow-hidden">
+                        <img
+                          src={game.thumbnail}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          alt={game.title}
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-[#060814] via-transparent to-transparent opacity-80" />
+                        <button
+                          onClick={(e) => handleFavClick(e, game.id || game._id)}
+                          className="absolute top-2.5 right-2.5 z-20 rounded-full bg-black/60 p-2 text-xs backdrop-blur-md transition-transform hover:scale-125 border border-white/10 cursor-pointer"
+                          title={isFavorite(game.id || game._id) ? "Remove from Favorites" : "Add to Favorites"}
+                        >
+                          {isFavorite(game.id || game._id) ? '❤️' : '🤍'}
+                        </button>
+                      </div>
 
-                  <div className="flex flex-col flex-1 p-4">
-                    <h3 className="text-base font-bold text-white mb-1.5 line-clamp-1 group-hover:text-cyan-300 transition-colors">
-                      {game.title}
-                    </h3>
-                    <p className="text-xs text-slate-300 mb-4 line-clamp-2 leading-relaxed">
-                      {game.short_description}
-                    </p>
-                    <span className="mt-auto self-start text-[11px] font-semibold text-cyan-300 border border-cyan-400/30 bg-cyan-500/10 px-2.5 py-0.5 rounded-full backdrop-blur-md">
-                      {game.genre || 'Arcade'}
-                    </span>
-                  </div>
+                      <div className="flex flex-col flex-1 p-4">
+                        <h3 className="text-base font-bold text-white mb-1.5 line-clamp-1 group-hover:text-cyan-300 transition-colors">
+                          {game.title}
+                        </h3>
+                        <p className="text-xs text-slate-300 mb-4 line-clamp-2 leading-relaxed">
+                          {game.short_description}
+                        </p>
+                        <span className="mt-auto self-start text-[11px] font-semibold text-cyan-300 border border-cyan-400/30 bg-cyan-500/10 px-2.5 py-0.5 rounded-full backdrop-blur-md">
+                          {game.genre || 'Arcade'}
+                        </span>
+                      </div>
+                    </div>
+                  </Tilt>
                 </motion.div>
               ))
             )}

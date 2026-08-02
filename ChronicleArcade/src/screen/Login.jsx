@@ -35,7 +35,6 @@ export function Login() {
                 if (data.token) {
                     localStorage.setItem('token', data.token);
                 }
-
                 confetti({
                     particleCount: 150,
                     angle: 60,

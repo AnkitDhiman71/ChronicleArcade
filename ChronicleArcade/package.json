@@ -18,7 +18,9 @@
     "motion": "^12.42.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-parallax-tilt": "^1.7.337",
     "react-router-dom": "^7.18.1",
+    "react-share": "^5.3.0",
     "swiper": "^14.0.5",
     "tsparticles": "^4.3.2",
     "yup": "^1.7.1"

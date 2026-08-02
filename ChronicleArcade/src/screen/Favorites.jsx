@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { getData } from '../API/GetData';
 import { getFavorites, toggleFavorite, isFavorite } from '../utils/favorites';
+import Tilt from 'react-parallax-tilt';
 
 export function Favorites() {
   const [favoriteGames, setFavoriteGames] = useState([]);
@@ -85,40 +86,55 @@ export function Favorites() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                whileHover={{ y: -7, scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => navigate(`/GameDetails/game-list?id=${game.id || game._id}`)}
-                className="group glass-card flex flex-col h-full cursor-pointer rounded-2xl overflow-hidden shadow-lg transition-all duration-300 border border-pink-500/20 hover:border-pink-500/50"
+                className="h-full"
               >
-                <div className="relative h-44 w-full overflow-hidden">
-                  <img
-                    src={game.thumbnail}
-                    alt={game.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#060814] via-transparent to-transparent opacity-80" />
-                  <button
-                    onClick={(e) => handleRemoveFavorite(e, game.id || game._id)}
-                    className="absolute top-2.5 right-2.5 z-20 rounded-full bg-black/60 p-2 text-xs backdrop-blur-md transition-transform hover:scale-125 border border-white/10 cursor-pointer"
-                    title="Remove from Favorites"
+                <Tilt
+                  tiltMaxAngleX={25}
+                  tiltMaxAngleY={25}
+                  perspective={600}
+                  scale={1.06}
+                  glareEnable={true}
+                  glareMaxOpacity={0.4}
+                  glareColor="#ec4899"
+                  glarePosition="all"
+                  glareBorderRadius="1rem"
+                  className="h-full rounded-2xl overflow-hidden"
+                >
+                  <div
+                    onClick={() => navigate(`/GameDetails/game-list?id=${game.id || game._id}`)}
+                    className="group glass-card flex flex-col h-full cursor-pointer rounded-2xl overflow-hidden shadow-lg transition-all duration-300 border border-pink-500/20 hover:border-pink-500/50"
                   >
-                    ❤️
-                  </button>
-                </div>
+                    <div className="relative h-44 w-full overflow-hidden">
+                      <img
+                        src={game.thumbnail}
+                        alt={game.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-[#060814] via-transparent to-transparent opacity-80" />
+                      <button
+                        onClick={(e) => handleRemoveFavorite(e, game.id || game._id)}
+                        className="absolute top-2.5 right-2.5 z-20 rounded-full bg-black/60 p-2 text-xs backdrop-blur-md transition-transform hover:scale-125 border border-white/10 cursor-pointer"
+                        title="Remove from Favorites"
+                      >
+                        ❤️
+                      </button>
+                    </div>
 
-                <div className="flex flex-col flex-1 p-4">
-                  <h3 className="text-base font-bold text-white mb-1.5 line-clamp-1 group-hover:text-pink-300 transition-colors">
-                    {game.title}
-                  </h3>
-                  <p className="text-xs text-slate-300 mb-4 line-clamp-2 leading-relaxed">
-                    {game.short_description}
-                  </p>
-                  {game.genre && (
-                    <span className="mt-auto self-start text-[11px] font-semibold text-pink-300 border border-pink-400/30 bg-pink-500/10 px-2.5 py-0.5 rounded-full">
-                      {game.genre}
-                    </span>
-                  )}
-                </div>
+                    <div className="flex flex-col flex-1 p-4">
+                      <h3 className="text-base font-bold text-white mb-1.5 line-clamp-1 group-hover:text-pink-300 transition-colors">
+                        {game.title}
+                      </h3>
+                      <p className="text-xs text-slate-300 mb-4 line-clamp-2 leading-relaxed">
+                        {game.short_description}
+                      </p>
+                      {game.genre && (
+                        <span className="mt-auto self-start text-[11px] font-semibold text-pink-300 border border-pink-400/30 bg-pink-500/10 px-2.5 py-0.5 rounded-full">
+                          {game.genre}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </Tilt>
               </motion.div>
             ))}
           </div>
