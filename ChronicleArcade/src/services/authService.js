@@ -140,6 +140,13 @@ export const deleteTweet = async (tweetId) => {
 };
 
 export const sendHeartbeat = async (seconds = 10) => {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+
+  if (!token || role === 'admin') {
+    return;
+  }
+
   try {
     const response = await fetch(`${BASE_URL}/heartbeat`, {
       method: 'POST',
@@ -149,6 +156,13 @@ export const sendHeartbeat = async (seconds = 10) => {
       credentials: 'include',
       body: JSON.stringify({ seconds }),
     });
+
+    if (response.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      return;
+    }
+
     return await response.json();
   } catch (err) {
     console.error('Heartbeat error:', err);

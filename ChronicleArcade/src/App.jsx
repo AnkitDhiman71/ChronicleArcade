@@ -27,14 +27,13 @@ function App() {
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   useEffect(() => {
-    const isLoggedIn = Boolean(localStorage.getItem('token'));
-    const role = localStorage.getItem('role');
-
-    if (!isLoggedIn || role === 'admin') return;
-
-    sendHeartbeat(10);
     const interval = setInterval(() => {
-      sendHeartbeat(10);
+      const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role');
+
+      if (token && role !== 'admin') {
+        sendHeartbeat(10);
+      }
     }, 10000);
 
     return () => clearInterval(interval);
