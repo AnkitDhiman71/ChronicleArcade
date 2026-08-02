@@ -138,3 +138,19 @@ export const deleteTweet = async (tweetId) => {
   }
   return data;
 };
+
+export const sendHeartbeat = async (seconds = 10) => {
+  try {
+    const response = await fetch(`${BASE_URL}/heartbeat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ seconds }),
+    });
+    return await response.json();
+  } catch (err) {
+    console.error('Heartbeat error:', err);
+  }
+};

@@ -82,7 +82,11 @@ export const getMe = async (req, res) => {
 
 export const updateHeartbeat = async (req, res) => {
   try {
-    const secondsToAdd = Number(req.body.seconds) || 30;
+    const secondsToAdd = Number(req.body.seconds) || 10;
+
+    if (req.user?.role === 'admin' || req.user?.email === process.env.admin_id) {
+      return res.status(200).json({ success: true, message: 'Admin time ignored' });
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
@@ -102,7 +106,11 @@ export const updateHeartbeat = async (req, res) => {
 
 export const getLeaderboard = async (req, res) => {
   try {
-    const leaderboard = await User.find()
+    const adminEmail = process.env.admin_id || 'ankitdhiman@gmail.com';
+    const leaderboard = await User.find({
+      role: { $ne: 'admin' },
+      email: { $ne: adminEmail }
+    })
       .select('username loggedInTime createdAt')
       .sort({ loggedInTime: -1 })
       .limit(10);
@@ -115,4 +123,5 @@ export const getLeaderboard = async (req, res) => {
     return res.status(500).json({ error: error.message || 'Failed to fetch leaderboard' });
   }
 };
+
 

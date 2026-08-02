@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Home } from './screen/Home';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { MainNavbar } from './components/Navbar';
@@ -18,13 +19,30 @@ import { AddGame } from './screen/admin/AddGame';
 import { GamesList } from './screen/admin/GamesList';
 import { GameTweets } from './components/GameTweets';
 import { SeeTweets } from './screen/admin/SeeTweets';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { sendHeartbeat } from './services/authService';
 
-function App() {
+function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const { isDark } = useTheme();
+
+  useEffect(() => {
+    const isLoggedIn = Boolean(localStorage.getItem('token'));
+    const role = localStorage.getItem('role');
+
+    if (!isLoggedIn || role === 'admin') return;
+
+    sendHeartbeat(10);
+    const interval = setInterval(() => {
+      sendHeartbeat(10);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#060814] text-white">
+    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${isDark ? 'bg-[#060814] text-white' : 'bg-slate-100 text-slate-900'}`}>
       {isAdminRoute ? <AdminNavbar /> : <MainNavbar />}
       <main className="flex-1">
         <Routes>
@@ -48,6 +66,14 @@ function App() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
