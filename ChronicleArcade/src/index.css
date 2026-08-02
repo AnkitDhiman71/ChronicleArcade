@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@layer utilities {
+  @keyframes neonGlow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.35), 0 0 30px rgba(0, 240, 255, 0.15);
+    }
+
+    50% {
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.65), 0 0 50px rgba(0, 240, 255, 0.35);
+    }
+  }
+
+  @keyframes pulseAura {
+
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.8;
+      transform: scale(1.08);
+    }
+  }
+
+  .animate-neon-glow {
+    animation: neonGlow 3s infinite ease-in-out;
+  }
+
+  .animate-pulse-aura {
+    animation: pulseAura 4s infinite ease-in-out;
+  }
+
+  .glass-card {
+    background: rgba(18, 18, 35, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060814;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
