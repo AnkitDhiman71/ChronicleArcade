@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
+import confetti from 'canvas-confetti';
 import { fields } from '../Formfields/loginFields';
 import { loginUser } from '../services/authService';
 
@@ -35,17 +36,32 @@ export function Login() {
                     localStorage.setItem('token', data.token);
                 }
 
+                confetti({
+                    particleCount: 150,
+                    angle: 60,
+                    spread: 80,
+                    startVelocity: 60,
+                    origin: { x: 0, y: 0.9 }
+                });
+                confetti({
+                    particleCount: 150,
+                    angle: 120,
+                    spread: 80,
+                    startVelocity: 60,
+                    origin: { x: 1, y: 0.9 }
+                });
+
                 localStorage.setItem('lastSyncTime', Date.now().toString());
 
                 const isAdmin = values.email === 'ankitdhiman@gmail.com' && values.password === 'Ankit@123';
                 if (isAdmin) {
                     localStorage.setItem('role', 'admin');
                     setStatus({ success: true, message: 'Admin login successful' });
-                    navigate('/admin');
+                    setTimeout(() => navigate('/admin'), 600);
                 } else {
                     localStorage.setItem('role', 'user');
                     setStatus({ success: true, message: 'Login successful' });
-                    navigate('/');
+                    setTimeout(() => navigate('/'), 600);
                 }
             } catch (error) {
                 setStatus({ success: false, message: error.message });
@@ -100,4 +116,3 @@ export function Login() {
         </>
     );
 }
-

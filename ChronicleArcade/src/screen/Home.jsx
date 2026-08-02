@@ -5,10 +5,12 @@ import { motion } from 'motion/react';
 import { Slider } from '../components/Slider1';
 import { Slider2 } from "../components/Slider2";
 import { GameRoulette } from '../components/GameRoulette';
+import { toggleFavorite, isFavorite, getFavorites } from '../utils/favorites';
 
 export function Home() {
   const [gameData, setGameData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [favs, setFavs] = useState(getFavorites());
   const navigate = useNavigate();
 
   const sendData = (gameId) => {
@@ -31,6 +33,13 @@ export function Home() {
 
     fetchGameData();
   }, []);
+
+  const handleFavClick = (e, gameId) => {
+    e.stopPropagation();
+    toggleFavorite(gameId);
+    setFavs(getFavorites());
+  };
+
 
   return (
     <div className="relative bg-[#060814] min-h-screen overflow-hidden text-white">
@@ -147,6 +156,13 @@ export function Home() {
                       alt={game.title}
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-[#060814] via-transparent to-transparent opacity-80" />
+                    <button
+                      onClick={(e) => handleFavClick(e, game.id || game._id)}
+                      className="absolute top-2.5 right-2.5 z-20 rounded-full bg-black/60 p-2 text-xs backdrop-blur-md transition-transform hover:scale-125 border border-white/10 cursor-pointer"
+                      title={isFavorite(game.id || game._id) ? "Remove from Favorites" : "Add to Favorites"}
+                    >
+                      {isFavorite(game.id || game._id) ? '❤️' : '🤍'}
+                    </button>
                   </div>
 
                   <div className="flex flex-col flex-1 p-4">

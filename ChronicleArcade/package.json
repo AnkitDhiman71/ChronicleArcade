@@ -12,6 +12,7 @@
   "dependencies": {
     "@tsparticles/preset-snow": "^4.3.2",
     "@tsparticles/react": "^4.3.2",
+    "canvas-confetti": "^1.9.4",
     "formik": "^2.4.9",
     "lucide-react": "^1.24.0",
     "motion": "^12.42.2",

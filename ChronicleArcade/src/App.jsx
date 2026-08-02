@@ -19,6 +19,7 @@ import { AddGame } from './screen/admin/AddGame';
 import { GamesList } from './screen/admin/GamesList';
 import { GameTweets } from './components/GameTweets';
 import { SeeTweets } from './screen/admin/SeeTweets';
+import { Favorites } from './screen/Favorites';
 import { sendHeartbeat } from './services/authService';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/explore' element={<Explore />} />
+          <Route path='/favorites' element={<Favorites />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/contactus' element={<Contactus />} />
           <Route path='/signup' element={<Signup />} />

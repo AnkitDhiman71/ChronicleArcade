@@ -58,6 +58,7 @@ export function MainNavbar() {
                 <div className="absolute left-0 top-full hidden w-full flex-col gap-4 border-t border-white/10 bg-[#0a0a16] px-6 py-5 peer-checked:flex md:static md:flex md:w-auto md:flex-row md:items-center md:gap-8 md:border-0 md:bg-transparent md:p-0">
                     <Link to="/" className="font-semibold text-slate-300 transition-all duration-200 hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">Home</Link>
                     <Link to="/explore" className="font-semibold text-slate-300 transition-all duration-200 hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">Explore</Link>
+                    <Link to="/favorites" className="font-semibold text-slate-300 transition-all duration-200 hover:text-pink-400 hover:drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">Favorites ❤️</Link>
                     <Link to="/leaderboard" className="font-semibold text-slate-300 transition-all duration-200 hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">Leaderboard</Link>
                     <Link to="/tweet" className="font-semibold text-slate-300 transition-all duration-200 hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">Post Tweet</Link>
                     <Link to="/contactus" className="font-semibold text-slate-300 transition-all duration-200 hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">Contact Us</Link>
