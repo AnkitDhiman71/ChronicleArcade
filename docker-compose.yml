@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # MongoDB Service
+  mongo:
+    image: mongo:7.0
+    container_name: chronicle_arcade_db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Express API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chronicle_arcade_backend
+    restart: always
+    ports:
+      - "5174:5174"
+    environment:
+      PORT: 5174
+      MONGO_URL: mongodb://mongo:27017/myArcade
+      JWT_SECRET: DhimanAJ
+      admin_id: ankitdhiman@gmail.com
+      admin_password: Ankit@123
+    volumes:
+      - backend_uploads:/app/uploads
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  # Frontend React SPA Service (Nginx)
+  frontend:
+    build:
+      context: ./ChronicleArcade
+      dockerfile: Dockerfile
+    container_name: chronicle_arcade_frontend
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+    driver: local
+  backend_uploads:
+    driver: local
