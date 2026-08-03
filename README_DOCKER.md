@@ -1,75 +1,39 @@
 # Docker Setup & Usage Guide for ChronicleArcade
 
-This project is fully containerized using **Docker** and **Docker Compose**. It orchestrates three services:
-1. **Frontend**: React + Vite (Served via Nginx on port `5173`)
-2. **Backend**: Node.js + Express API (Running on port `5174`)
-3. **Database**: MongoDB 7.0 (Running on port `27017`)
+This project is fully containerized using **Docker** and **Docker Compose**, supporting **Instant Live Hot-Reloading (HMR)** for active development!
 
 ---
 
-## 📋 Prerequisites
-- Ensure **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** is installed and running on your machine.
+## 🏗️ Services Overview
+1. **Frontend**: React + Vite Dev Server with HMR (Port `5173`)
+2. **Backend**: Node.js Express API with `node --watch` live reloading (Port `5174`)
+3. **Database**: MongoDB 7.0 (Port `27017`)
 
 ---
 
-## 🚀 How to Run the Application
+## ⚡ Instant Hot-Reloading (Development Mode)
 
-### 1. Build and Start All Services
-From the root folder of the project, run:
+With volume mounts enabled:
+- **Frontend**: Edit any `.jsx` or `.css` file in `ChronicleArcade/src/` and save. The browser updates **instantly** without reloading or rebuilding containers!
+- **Backend**: Edit any `.js` file in `backend/` and save. Node Express automatically reboots in **less than 1 second**!
+
+---
+
+## 🚀 How to Run
+
+### Start Development Server with Hot-Reloading:
 ```bash
 docker-compose up --build
 ```
-> **Tip**: Add `-d` to run in detached (background) mode:
-> ```bash
-> docker-compose up --build -d
-> ```
 
-### 2. Access the Application
-- **Frontend App**: `http://localhost:5173`
-- **Backend API**: `http://localhost:5174` (Health check: `http://localhost:5174/`)
-- **MongoDB Connection**: `mongodb://localhost:27017/myArcade`
+### Access URLs:
+- **Frontend**: `http://localhost:5173`
+- **Backend API**: `http://localhost:5174`
+- **MongoDB**: `mongodb://localhost:27017/myArcade`
 
 ---
 
-## 🛑 How to Stop the Application
-
-To stop all running containers:
+## 🛑 How to Stop
 ```bash
 docker-compose down
 ```
-
-To stop containers **and remove persistent volumes** (resets MongoDB database):
-```bash
-docker-compose down -v
-```
-
----
-
-## 📊 Useful Docker Commands
-
-- **View Logs for All Services**:
-  ```bash
-  docker-compose logs -f
-  ```
-
-- **View Logs for Specific Service**:
-  ```bash
-  docker-compose logs -f backend
-  docker-compose logs -f frontend
-  docker-compose logs -f mongo
-  ```
-
-- **Rebuild a Specific Container**:
-  ```bash
-  docker-compose build backend
-  ```
-
----
-
-## 📁 Container Architecture
-
-- `docker-compose.yml`: Main orchestration file for all 3 services.
-- `backend/Dockerfile`: Node.js Express server environment.
-- `ChronicleArcade/Dockerfile`: Multi-stage build (Vite build + Nginx server).
-- `mongo_data` volume: Persists MongoDB database data on your hard drive.
-- `backend_uploads` volume: Persists user upload files on your hard drive.
