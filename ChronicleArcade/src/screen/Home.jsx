@@ -60,7 +60,7 @@ export function Home() {
               transition={{ duration: 0.5 }}
               className="inline-block mb-3 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-4 py-1 text-xs font-semibold tracking-wider text-cyan-300 backdrop-blur-md shadow-[0_0_15px_rgba(0,240,255,0.2)]"
             >
-              🎮 NEXT-GEN ARCADE PLATFORM
+              🎮 NEXT-GEN ARCADE PLATFORM 
             </motion.span>
             <motion.h1
               initial={{ opacity: 0, y: 25 }}

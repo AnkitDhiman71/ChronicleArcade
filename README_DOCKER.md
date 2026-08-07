@@ -1,6 +1,6 @@
 # Docker Setup & Usage Guide for ChronicleArcade
 
-This project is fully containerized using **Docker** and **Docker Compose**, supporting **Instant Live Hot-Reloading (HMR)** for active development!
+This project is fully containerized using **Docker** and **Docker Compose**, supporting **Instant Live Hot-Reloading (HMR)** and **Automatic Public Shareable URLs for Mobile Phones**!
 
 ---
 
@@ -8,32 +8,33 @@ This project is fully containerized using **Docker** and **Docker Compose**, sup
 1. **Frontend**: React + Vite Dev Server with HMR (Port `5173`)
 2. **Backend**: Node.js Express API with `node --watch` live reloading (Port `5174`)
 3. **Database**: MongoDB 7.0 (Port `27017`)
+4. **Tunnel**: Cloudflare Tunnel container (`cloudflare/cloudflared`) generating a public HTTPS link for remote phones anywhere!
 
 ---
 
-## ⚡ Instant Hot-Reloading (Development Mode)
+## 📱 How to Get a Public Link for Mobile Phones (Directly in Docker)
 
-With volume mounts enabled:
-- **Frontend**: Edit any `.jsx` or `.css` file in `ChronicleArcade/src/` and save. The browser updates **instantly** without reloading or rebuilding containers!
-- **Backend**: Edit any `.js` file in `backend/` and save. Node Express automatically reboots in **less than 1 second**!
-
----
-
-## 🚀 How to Run
-
-### Start Development Server with Hot-Reloading:
+Run Docker Compose:
 ```bash
-docker-compose up --build
+docker-compose up
 ```
 
-### Access URLs:
-- **Frontend**: `http://localhost:5173`
-- **Backend API**: `http://localhost:5174`
-- **MongoDB**: `mongodb://localhost:27017/myArcade`
+Look at the logs for **`chronicle_arcade_tunnel`**, or run:
+```bash
+docker-compose logs tunnel
+```
+
+You will see an auto-generated public HTTPS link like:
+```text
+https://random-name-here.trycloudflare.com
+```
+
+Share that link to **ANY phone anywhere in the world** to view your running Docker app live!
 
 ---
 
-## 🛑 How to Stop
-```bash
-docker-compose down
-```
+## 🚀 Commands Cheat Sheet
+
+- **Start everything**: `docker-compose up`
+- **Stop everything**: `docker-compose down`
+- **View public tunnel URL**: `docker-compose logs tunnel`

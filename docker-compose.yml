@@ -58,6 +58,15 @@ services:
     depends_on:
       - backend
 
+  # Public Tunnel Service (Generates a public URL link directly inside Docker for any phone!)
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: chronicle_arcade_tunnel
+    restart: always
+    command: tunnel --url http://frontend:5173
+    depends_on:
+      - frontend
+
 volumes:
   mongo_data:
     driver: local
